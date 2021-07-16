@@ -1,0 +1,107 @@
+﻿<UserControl
+    x:Class="Presentation.View.CreateColumnView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:domain="clr-namespace:Presentation"
+    xmlns:local="clr-namespace:Presentation.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:viewmodel="clr-namespace:Presentation.ViewModel"
+    xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+    d:DataContext="{d:DesignInstance Type=viewmodel:CreateColumnViewModel}"
+    mc:Ignorable="d">
+    <Grid MinWidth="200" Margin="16">
+
+        <StackPanel>
+
+            <TextBlock>Add a new column:</TextBlock>
+            <TextBox
+                Name="ColumnName"
+                Grid.Row="1"
+                Margin="0,6,0,0"
+                wpf:HintAssist.Hint="Column Name"
+                FontSize="18"
+                Style="{DynamicResource MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                    <Binding Path="ColumnName" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <domain:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <Separator Margin="10,10,10,10" />
+            <ComboBox
+                Name="Position"
+                wpf:HintAssist.Hint="Position"
+                SelectedItem="{Binding ColumnOrdinal, Mode=OneWayToSource}"
+                Style="{DynamicResource MaterialDesignFloatingHintComboBox}">
+                <ItemsControl.ItemsSource>
+                    <Binding Path="ColumnOrdinalOptions" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <domain:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </ItemsControl.ItemsSource>
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+
+
+            <Separator Margin="10,10,10,10" />
+
+
+
+            <TextBlock
+                Grid.Row="4"
+                Height="Auto"
+                MaxWidth="200"
+                Margin="0,10,0,10"
+                HorizontalAlignment="Center"
+                Foreground="Red"
+                Text="{Binding Path=Message, Mode=OneWay}"
+                TextWrapping="Wrap" />
+            <StackPanel
+                Grid.Row="5"
+                Margin="0,16,0,0"
+                Orientation="Horizontal">
+                <Button Command="{Binding CreateColumnCommand}" IsDefault="True">
+                    <Button.CommandParameter>
+                        <system:Boolean>True</system:Boolean>
+                    </Button.CommandParameter>
+                    <Button.Style>
+                        <Style BasedOn="{StaticResource MaterialDesignFlatButton}" TargetType="Button">
+                            <Setter Property="IsEnabled" Value="False" />
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ColumnName}" Value="False" />
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=Position}" Value="False" />
+                                    </MultiDataTrigger.Conditions>
+
+                                    <Setter Property="IsEnabled" Value="True" />
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    ADD
+                </Button>
+                <Button
+                    Margin="8,0,0,0"
+                    Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
+                    IsCancel="True"
+                    Style="{DynamicResource MaterialDesignFlatButton}">
+                    <Button.CommandParameter>
+                        <system:Boolean>False</system:Boolean>
+                    </Button.CommandParameter>
+                    CANCEL
+                </Button>
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+</UserControl>

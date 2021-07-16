@@ -1,0 +1,108 @@
+﻿<UserControl
+    x:Class="Presentation.BoardsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Presentation"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance Type=local:BoardsViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="820"
+    mc:Ignorable="d">
+    <Grid MaxWidth="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=ActualWidth}">
+        <StackPanel Margin="20">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock
+                    Margin="20"
+                    Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                    Text="Joined Boards" />
+                <Button
+                    Command="{Binding JoinBoardCommand}"
+                    IsDefault="True"
+                    Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon
+                            Width="15"
+                            Height="15"
+                            Margin="5,0,5,0"
+                            Kind="ShapeRectangleAdd" />
+                        <TextBlock Text="JOIN BOARD" />
+                    </StackPanel>
+                </Button>
+
+            </StackPanel>
+            <ItemsControl ItemsSource="{Binding Path=BoardController.JoinedBoards}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button
+                            Width="150"
+                            Height="Auto"
+                            MinHeight="80"
+                            Margin="20,20,20,20"
+                            Padding="15,10"
+                            HorizontalContentAlignment="Left"
+                            VerticalContentAlignment="Top"
+                            Command="{Binding Path=DataContext.OpenBoardCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
+                            CommandParameter="{Binding}">
+                            <TextBlock Text="{Binding Path=BoardName, Mode=TwoWay}" TextWrapping="Wrap" />
+                        </Button>
+
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <Separator Margin="50,20,50,20" />
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock
+                    Margin="20"
+                    Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                    Text="Created Boards" />
+                <Button
+                    Command="{Binding CreateBoardCommand}"
+                    IsDefault="True"
+                    Style="{DynamicResource MaterialDesignFlatButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon
+                            Width="15"
+                            Height="15"
+                            Margin="5,0,5,0"
+                            Kind="ShapeRectangleAdd" />
+                        <TextBlock Text="CREATE BOARD" />
+                    </StackPanel>
+                </Button>
+
+            </StackPanel>
+            <ItemsControl ItemsSource="{Binding Path=BoardController.CreatedBoards}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button
+                            Width="150"
+                            Height="Auto"
+                            MinHeight="80"
+                            Margin="20,20,20,20"
+                            Padding="15,10"
+                            HorizontalContentAlignment="Left"
+                            VerticalContentAlignment="Top"
+                            Command="{Binding Path=DataContext.OpenBoardCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
+                            CommandParameter="{Binding}">
+                            <TextBlock Text="{Binding Path=BoardName, Mode=TwoWay}" TextWrapping="Wrap" />
+                        </Button>
+
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </Grid>
+</UserControl>

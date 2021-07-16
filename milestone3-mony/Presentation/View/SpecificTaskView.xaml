@@ -1,0 +1,120 @@
+﻿<UserControl
+    x:Class="Presentation.View.SpecificTaskView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:domain="clr-namespace:Presentation"
+    xmlns:local="clr-namespace:Presentation.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:viewmodel="clr-namespace:Presentation.ViewModel"
+    xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+    d:DataContext="{d:DesignInstance Type=viewmodel:SpecificTaskViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Grid MinWidth="400" Margin="16">
+
+        <StackPanel>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                    Text="{Binding Path=Task.TaskCreationDate, StringFormat='Created on {0:dddd, MM.dd.yy, HH:mm}'}" />
+
+                <Button
+                    Grid.Column="2"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
+                    DockPanel.Dock="Right"
+                    IsDefault="True"
+                    Style="{StaticResource MaterialDesignIconButton}">
+                    <Button.CommandParameter>
+                        <system:Boolean>True</system:Boolean>
+                    </Button.CommandParameter>
+                    <wpf:PackIcon
+                        Width="30"
+                        Height="30"
+                        Kind="Close" />
+                </Button>
+            </Grid>
+            <RibbonSeparator Margin="10" />
+            <TextBox
+                Grid.Row="1"
+                Margin="0,6,0,0"
+                HorizontalAlignment="Left"
+                wpf:HintAssist.Hint="Title"
+                FontSize="18">
+                <TextBox.Text>
+                    <Binding Path="Task.TaskTitle" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <domain:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+
+
+            <RibbonSeparator Margin="10" />
+            <StackPanel Orientation="Horizontal">
+
+                <DatePicker
+                    Margin="00,0,10,0"
+                    wpf:HintAssist.Hint="DueDate"
+                    SelectedDate="{Binding DueDate}"
+                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                <wpf:TimePicker
+                    wpf:HintAssist.Hint="DueTime"
+                    SelectedTime="{Binding DueTime}"
+                    Style="{StaticResource MaterialDesignFloatingHintTimePicker}" />
+                <Separator Margin="30,0,30,0" />
+                <ComboBox
+                    Name="Assignee"
+                    wpf:HintAssist.Hint="Assignee"
+                    ItemsSource="{Binding Board.JoinedUsers}"
+                    SelectedItem="{Binding Task.TaskAssignee, Mode=TwoWay}">
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
+
+            </StackPanel>
+            <RibbonSeparator Margin="10" />
+            <TextBox
+                Grid.Row="2"
+                Height="100"
+                Margin="0,6,0,0"
+                wpf:HintAssist.Hint="Description"
+                Style="{DynamicResource MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                    <Binding Path="Task.TaskDescription" UpdateSourceTrigger="PropertyChanged" />
+                </TextBox.Text>
+            </TextBox>
+
+
+
+            <TextBlock
+                Grid.Row="4"
+                Height="Auto"
+                MaxWidth="200"
+                Margin="0,10,0,10"
+                HorizontalAlignment="Center"
+                Foreground="Red"
+                Text="{Binding Path=Task.Message, Mode=OneWay}"
+                TextWrapping="Wrap" />
+        </StackPanel>
+    </Grid>
+</UserControl>
