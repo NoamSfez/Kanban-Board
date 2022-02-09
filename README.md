@@ -1,12 +1,11 @@
 # KanBan Board
 
-Final project of my 1st year course Introduction to Software Engineering.
+### Description: ###
+Implementation of a Kanban Board system using a rigorous agile development process with the requirements, analysis, design, implementation, test, deployment, release management disciplines.
+The system architecture and design follow N-Tier and MVVM patterns.
 
-During the course we reviewed the key concepts in software engineering, focusing on the stages, the various software lifecycles and software engineering tools are acceptable for use in these stages.
-The course discussed requirements analysis, system design, software quality engineering, maintenance, and management
-Software projects. I also became familiar with and experience key topics and common tools for engineering Software, such as databases, web design, configuration management and version tracking.
-The course structure was project oriented, we worked into groups of 3 students,
-And will experience the process of software engineering while building software according to requirements using the tool
-Software Engineering. The software development process was iterative and includes about 3 milestones.
+### Technologies: ###
+C#, .NET, WPF, XAML, SQLite, NuGet package, Log4net, NUnit, moq, Design Patterns, UML, GitHub, Agile
+
 
 
